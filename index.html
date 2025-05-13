@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人主页 - 胡昊</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            background: #2c3e50;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        nav {
+            background: #34495e;
+            padding: 15px;
+            margin-bottom: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #3498db;
+        }
+
+        section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .education-item, .publication-item {
+            margin-bottom: 25px;
+            padding: 20px;
+            border-left: 3px solid #3498db;
+            transition: transform 0.3s;
+        }
+
+        .education-item:hover, .publication-item:hover {
+            transform: translateX(10px);
+        }
+
+        .date {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            nav {
+                text-align: center;
+            }
+            
+            nav a {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>胡昊</h1>
+    </header>
+
+    <nav>
+        <div class="container">
+            <a href="#education">教育背景</a>
+            <a href="#publications">学术成果</a>
+            <a href="#contact">联系我</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- 教育经历部分 -->
+        <section id="education">
+            <h2>教育背景</h2>
+            <div class="education-item">
+                <h3>清华大学 - 交叉信息研究院本科生</h3>
+                <p class="date">2022 - 2026（预计）</p>
+            </div>
+            <!-- 复制以下区块添加新教育经历 -->
+            <div class="education-item">
+                <h3>华盛顿大学 - 访问学者</h3>
+                <p class="date">2025.2-2025.8</p>
+                <p>研究方向：强化学习</p>
+            </div>
+        </section>
+
+        <!-- 学术成果部分 -->
+        <section id="publications">
+            <h2>学术成果</h2>
+            <div class="publication-item">
+                <h3>基于深度学习的文本生成技术研究</h3>
+                <p class="date">2023年发表于《人工智能学报》</p>
+                <p>提出了一种改进的Transformer架构... <a href="#">阅读全文</a></p>
+            </div>
+        </section>
+
+        <!-- 联系方式部分 -->
+        <section id="contact">
+            <h2>联系方式</h2>
+            <p>📧 邮箱：hh826538400@outlook.com</p>
+            <p>🔗 GitHub：<a href="https://github.com/huhaoo">github.com/huhaoo</a></p>
+        </section>
+    </div>
+</body>
+</html>
