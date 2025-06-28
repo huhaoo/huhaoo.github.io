@@ -116,7 +116,7 @@ export function Settings_text_box({ key_, type, data, className, edit, token, pl
   const API_URL = import.meta.env.VITE_API_URL;
   // console.log(`${API_URL}/api/settings?key=` + key_)
   useEffect(() => {
-    fetch(`${API_URL}/api/settings?key=` + key_)
+    fetch(`${API_URL}/settings?key=` + key_)
       .then((response) => response.json())
       .then((data) => {setText(data.message);})
       .catch((error) => {console.error(error);});
@@ -137,7 +137,7 @@ export function Settings_text_box({ key_, type, data, className, edit, token, pl
         setValue={setText}
         onEnter={() => {
           console.log(text);
-          fetch(`${API_URL}/api/settings?key=` + key_, {
+          fetch(`${API_URL}/settings?key=` + key_, {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
