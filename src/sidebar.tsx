@@ -7,10 +7,17 @@ const Sidebar = () => {
   const hr = <hr className="border-gray-200 my-2" />;
   const [edit, setEdit] = useState(get_var("edit_mode") || false);
   const [token, setToken] = useState(get_var("token") || "");
+  const block_class = `
+    block w-full
+    px-10 font-bold py-3 transition !text-black text-lg
+    hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100 hover:border-gray-200 hover:shadow hover:outline-none
+    duration-200 select-none
+  `;
+  const path = location.pathname =="/"? "/posts" : window.location.pathname;
   return (
-    <div className="w-64 h-screen bg-white border-r border-gray-200 p-6 flex flex-col justify-between">
+    <div className="w-64 h-screen bg-white border-r border-gray-200 flex flex-col justify-between">
       <div>
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2 px-6 pt-4">
           <img
             src="https://avatars.githubusercontent.com/u/25236123?v=4&size=64"
             alt="huhaoo"
@@ -24,7 +31,7 @@ const Sidebar = () => {
           />
         </div>
         {hr}
-        <div className="flex items-center space-x-2 text-sm">
+        <div className="flex items-center space-x-2 text-sm px-6">
           📞
           <Settings_text_box
             key_="phone"
@@ -35,9 +42,9 @@ const Sidebar = () => {
             placeholder="Phone ..."
           />
         </div>
-        <div className="flex items-center space-x-2 text-sm">
+        <div className="flex items-center space-x-2 text-sm px-6">
           ✉️
-        <Settings_text_box
+          <Settings_text_box
             key_="email"
             type="copy"
             className="select-none font-mono"
@@ -47,9 +54,26 @@ const Sidebar = () => {
           />
         </div>
         {hr}
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          className={block_class+(path=="/posts"&&" bg-gray-50 border-gray-200 shadow")}
+          href={path !== "/posts" ? "/posts" : undefined}
+        >
+          文章
+        </a>
+        <hr className="border-gray-200 mx-5" />
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          className={block_class+(path=="/activities"&&" bg-gray-50 border-gray-200 shadow")}
+          href={path !== "/activities" ? "/activities" : undefined}
+        >
+          动态
+        </a>
       </div>
       <div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 px-6">
           <ToggleSwitch
             knobSize={20}
             enabled={edit}
@@ -66,7 +90,7 @@ const Sidebar = () => {
           </div>
         </div>
         {hr}
-        <div className="text-xs text-gray-500">
+        <div className="text-xs text-gray-500 px-6 pb-4">
           <p>Powered by huhao, © 2025</p>
         </div>
       </div>

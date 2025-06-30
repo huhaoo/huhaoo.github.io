@@ -136,7 +136,6 @@ export function Settings_text_box({ key_, type, data, className, edit, token, pl
         value={text}
         setValue={setText}
         onEnter={() => {
-          console.log(text);
           fetch(`${API_URL}/settings?key=` + key_, {
             method: "POST",
             headers: {

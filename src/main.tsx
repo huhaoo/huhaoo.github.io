@@ -1,10 +1,26 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
-import IndexPage from './index'
+import '@/index.css'
+import IndexPage from '@/index'
+import { Toaster } from "react-hot-toast";
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <IndexPage />
+    <BrowserRouter>
+
+      <Routes>
+        <Route path="/" element={<IndexPage />} />
+        <Route path="/posts" element={<IndexPage />} />
+        <Route path="/activities" element={<IndexPage />} />
+      </Routes>
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 3000,
+          className: 'text-sm',
+        }}
+      />
+    </BrowserRouter>
   </StrictMode>,
 )
