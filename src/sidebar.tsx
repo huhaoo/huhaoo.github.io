@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Input_text_box, Settings_text_box, Text_box_hl_clickable } from "./components/ui/textbox";
 import ToggleSwitch from "./components/ui/switch";
-import { get_var, set_var } from "./components/local_storage";
+import { get_var, set_var } from "./utils";
 
 const Sidebar = () => {
   const hr = <hr className="border-gray-200 my-2" />;
-  const [edit, setEdit] = useState(get_var("edit_mode") || false);
+  const edit = get_var("edit_mode") || false;
   const [token, setToken] = useState(get_var("token") || "");
   const block_class = `
     block w-full
@@ -15,7 +15,7 @@ const Sidebar = () => {
   `;
   const path = location.pathname =="/"? "/posts" : window.location.pathname;
   return (
-    <div className="w-64 h-screen bg-white border-r border-gray-200 flex flex-col justify-between">
+    <div className="w-72 h-screen bg-white border-r border-gray-200 flex flex-col justify-between">
       <div>
         <div className="flex items-center space-x-2 px-6 pt-4">
           <img
@@ -38,7 +38,6 @@ const Sidebar = () => {
             type="copy"
             className="select-none font-mono"
             edit={edit}
-            token={token}
             placeholder="Phone ..."
           />
         </div>
@@ -49,13 +48,11 @@ const Sidebar = () => {
             type="copy"
             className="select-none font-mono"
             edit={edit}
-            token={token}
             placeholder="Email ..."
           />
         </div>
         {hr}
         <a
-          target="_blank"
           rel="noopener noreferrer"
           className={block_class+(path=="/posts"&&" bg-gray-50 border-gray-200 shadow")}
           href={path !== "/posts" ? "/posts" : undefined}
@@ -64,7 +61,6 @@ const Sidebar = () => {
         </a>
         <hr className="border-gray-200 mx-5" />
         <a
-          target="_blank"
           rel="noopener noreferrer"
           className={block_class+(path=="/activities"&&" bg-gray-50 border-gray-200 shadow")}
           href={path !== "/activities" ? "/activities" : undefined}
@@ -77,7 +73,7 @@ const Sidebar = () => {
           <ToggleSwitch
             knobSize={20}
             enabled={edit}
-            setEnabled={(v: boolean) => { setEdit(v); set_var("edit_mode", v); }}
+            setEnabled={(v: boolean) => { set_var("edit_mode", v); window.location.reload(); }}
             offcolor="#cccccc"
             title={edit ? "Editing mode" : "View mode"}
           />
@@ -90,7 +86,7 @@ const Sidebar = () => {
           </div>
         </div>
         {hr}
-        <div className="text-xs text-gray-500 px-6 pb-4">
+        <div className="text-xs text-gray-500 px-6 pb-4 text-center">
           <p>Powered by huhao, © 2025</p>
         </div>
       </div>

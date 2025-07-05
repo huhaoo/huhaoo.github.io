@@ -1,5 +1,6 @@
 import { useEffect, useState, type JSX } from "react";
 import toast from "react-hot-toast";
+import { api_url, get_var } from "@/utils";
 
 const hl_class = `px-3 py-1.5
   rounded-full
@@ -103,25 +104,24 @@ export function Input_text_box({ value, setValue, onEnter, placeholder, classNam
   )
 }
 
-export function Settings_text_box({ key_, type, data, className, edit, token, placeholder }: {
+export function Settings_text_box({ key_, type, data, className, edit, placeholder }: {
   key_: string,
   type?: "link" | "copy",
   data?: any,
   className?: string
   edit: boolean
-  token: string
   placeholder?: string
 }): JSX.Element {
   const [text, setText] = useState<string>("");
-  const API_URL = import.meta.env.VITE_API_URL;
-  // console.log(`${API_URL}/api/settings?key=` + key_)
+  const API_URL = api_url();
+  console.log(`${API_URL}/api/settings?key=` + key_)
   useEffect(() => {
     fetch(`${API_URL}/settings?key=` + key_)
       .then((response) => response.json())
-      .then((data) => {setText(data.message);})
-      .catch((error) => {console.error(error);});
+      .then((data) => { setText(data.message); })
+      .catch((error) => { console.error(error); });
   }, []);
-  if(!edit)
+  if (!edit)
     return (
       <Text_box_hl_clickable
         text={text}
@@ -138,23 +138,45 @@ export function Settings_text_box({ key_, type, data, className, edit, token, pl
         onEnter={() => {
           fetch(`${API_URL}/settings?key=` + key_, {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ key: key_, value: text, token: token })
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({ key: key_, value: text, token: get_var("token") || "" })
           })
-        .then((response) => response.json())
-          .then((data) => {
-            console.log(data);
-            if(data.status==="success")
-              toast.success(data.message);
-            else
-              toast.error(data.message);
-          })
-          .catch((error) => {toast.error(error);});
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+              if (data.status === "success")
+                toast.success(data.message);
+              else
+                toast.error(data.message);
+            })
+            .catch((error) => { toast.error(error); });
         }}
         className={className}
         placeholder={placeholder}
       />
     )
+}
+
+export function Textarea({ text, setText, placeholder, rows, className, ref }: {
+  text: string,
+  setText: (v: string) => void,
+  placeholder?: string,
+  rows?: number,
+  className?: string,
+  ref?: React.Ref<HTMLTextAreaElement>
+}): JSX.Element {
+  return (
+    <textarea
+      placeholder={placeholder}
+      rows={rows}
+      value={text}
+      ref={ref}
+      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setText(e.target.value);
+        e.target.style.height = "auto";
+        e.target.style.height = `${e.target.scrollHeight}px`;
+      }}
+      className={`w-full resize-none text-sm focus:outline-none overflow-hidden ${className}`}
+    />
+  )
 }

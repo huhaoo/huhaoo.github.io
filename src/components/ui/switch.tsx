@@ -12,7 +12,7 @@ export default function ToggleSwitch({ knobSize, gap, translate, title, oncolor,
 }) {
   gap = gap || knobSize * 0.1;
   translate = translate || knobSize * 0.5;
-  const outerWidth = knobSize + translate + gap * 2 + 2;
+  const outerWidth = knobSize + translate + gap * 2;
 
   return (
     <Switch
