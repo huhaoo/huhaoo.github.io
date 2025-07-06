@@ -86,7 +86,7 @@ export function MarkdownWithMath({ children, className }: { children: ReactNode,
 
 
 export function api_url(): string {
-	if(import.meta.env.MODE === "development")
+	if (import.meta.env.MODE === "development")
 		return import.meta.env.VITE_API_URL_LOCAL
 	return import.meta.env.VITE_API_URL
 }

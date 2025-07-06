@@ -5,17 +5,17 @@ import { get_var, set_var } from "./utils";
 
 const Sidebar = () => {
   const hr = <hr className="border-gray-200 my-2" />;
-  const edit = get_var("edit_mode") || false;
+  const edit = get_var("admin_mode") || false;
   const [token, setToken] = useState(get_var("token") || "");
   const block_class = `
-    block w-full
+    block w-full 
     px-10 font-bold py-3 transition !text-black text-lg
     hover:bg-gradient-to-r hover:from-gray-50 hover:to-gray-100 hover:border-gray-200 hover:shadow hover:outline-none
     duration-200 select-none
   `;
   const path = location.pathname =="/"? "/posts" : window.location.pathname;
   return (
-    <div className="w-72 h-screen bg-white border-r border-gray-200 flex flex-col justify-between">
+    <div className="w-72 h-screen bg-white border-r border-gray-200 flex flex-col justify-between sticky top-0">
       <div>
         <div className="flex items-center space-x-2 px-6 pt-4">
           <img
@@ -73,7 +73,7 @@ const Sidebar = () => {
           <ToggleSwitch
             knobSize={20}
             enabled={edit}
-            setEnabled={(v: boolean) => { set_var("edit_mode", v); window.location.reload(); }}
+            setEnabled={(v: boolean) => { set_var("admin_mode", v); window.location.reload(); }}
             offcolor="#cccccc"
             title={edit ? "Editing mode" : "View mode"}
           />

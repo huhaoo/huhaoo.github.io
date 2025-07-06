@@ -52,3 +52,44 @@ export function fetchPosts(
       toast.error(error.message);
     });
 }
+
+export function fetchPost(postId: number, setPost: (post: Post) => void) {
+  fetch(`${API_URL}/posts/collect/${postId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "token": get_var("token") || ""
+    }
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.status === "success") {
+        const post = Object.assign(new Post(), data.message);
+        setPost(post);
+      } else {
+        toast.error(data.message);
+      }
+    })
+    .catch((error) => {
+      toast.error(error.message);
+    });
+}
+
+export function pushPost(body: Post, mode: "new" | "update",
+  onSuccess: (message: string) => void = () => setTimeout(() => { window.location.reload(); }, 2000))
+{
+  fetch(`${API_URL}/posts/${mode}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', },
+    body: JSON.stringify({ ...body, token: get_var("token") || "" }),
+  }).then((response) => response.json())
+    .then((message) => {
+      if (message.status === "success") {
+        toast.success(message.message);
+        onSuccess(message.message);
+      } else toast.error(message.message);
+    })
+    .catch((error) => { toast.error(error.message); });
+};
+
+export const buttonClass="fixed top-4 right-4 z-50 bg-white text-black border border-gray-300 rounded-full w-12 h-12 flex items-center justify-center shadow-md hover:bg-gray-100 transition-colors duration-200"
