@@ -18,9 +18,10 @@ export default function PostsPage() {
       fetchPosts(posts, setPosts, {
         category: "post",
         // category: "activity",
-        visible: true,
+        deleted: false,
+        // deleted: true,
         private: get_var("admin_mode") ? undefined : false
-      });
+      } as Post);
     }, []);
 
   const max_preview_length = postId ? 0x7fffffff : 500;
@@ -58,7 +59,7 @@ export default function PostsPage() {
                       {!post.private && <>取消</>}公开
                     </div>
                     <div className="cursor-pointer" onClick={() => {
-                      pushPost({ id: post.id, visible: false }, "update", () => setPosts(posts.filter(p => p.id !== post.id)));
+                      pushPost({ id: post.id, deleted: true }, "update", () => setPosts(posts.filter(p => p.id !== post.id)));
                     }}>
                       删除
                     </div>

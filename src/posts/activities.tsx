@@ -5,7 +5,7 @@ import { Textarea } from "@/components/ui/textbox";
 import { formatTime, get_var, MarkdownWithMath } from "@/utils";
 import toast from "react-hot-toast";
 
-import { fetchPosts, pushPost, type Post } from "@/posts/utils";
+import { fetchPosts, pushPost, Post } from "@/posts/utils";
 
 export default function ActivitiesPage() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -17,7 +17,7 @@ export default function ActivitiesPage() {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   useEffect(() => { fetchPosts(posts,setPosts, {
     category: "activity",
-    visible: true,
+    deleted: false,
     private: get_var("admin_mode")?undefined: false
   }); }, []);
 
@@ -43,7 +43,7 @@ export default function ActivitiesPage() {
                       id: id,
                       category: "activity",
                       priority: 0,
-                      visible: true,
+                      deleted: false,
                       private: false,
                       title: title,
                       content: text,
@@ -87,7 +87,7 @@ export default function ActivitiesPage() {
                       {!post.private&&<>取消</>}公开
                     </div>
                     <div className="cursor-pointer" onClick={() =>{
-                      pushPost({id: post.id, visible: false}, "update", () => setPosts(posts.filter(p => p.id !== post.id)));
+                      pushPost({id: post.id, deleted: true}, "update", () => setPosts(posts.filter(p => p.id !== post.id)));
                     }}>
                       删除
                     </div>

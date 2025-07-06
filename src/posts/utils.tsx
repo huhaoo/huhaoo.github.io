@@ -7,7 +7,7 @@ export class Post {
 
   category?: string;
   priority?: number;
-  visible?: boolean;
+  deleted?: boolean;
   private?: boolean;
   label?: string;
 
@@ -25,9 +25,11 @@ export function fetchPosts(
   offset?: number,
   limit?: number,
 ) {
+  // console.log(JSON.stringify(limitation));
   var head = `${API_URL}/posts/collect?`;
   for (const key in limitation) if (limitation[key as keyof Post] !== undefined)
-    head += `${key}=${encodeURIComponent(limitation[key as keyof Post] || "")}&`;
+    head += `${key}=${encodeURIComponent(limitation[key as keyof Post] as string|number|boolean)}&`;
+  // console.log(head)
   if (offset !== undefined) head += `offset=${offset}&`;
   if (limit !== undefined) head += `limit=${limit}&`;
   head = head.slice(0, -1);

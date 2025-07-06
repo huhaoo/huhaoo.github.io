@@ -10,7 +10,7 @@ export default function PostEditPage() {
   const [post, setPost] = useState<Post>(Object.assign(new Post(), {
     category: "post",
     priority: 0,
-    visible: true,
+    deleted: false,
     private: false,
     label: "",
     title: "",
