@@ -5,7 +5,8 @@ import { Textarea } from "@/components/ui/textbox";
 import { formatTime, get_var, MarkdownWithMath } from "@/utils";
 import toast from "react-hot-toast";
 
-import { fetchPosts, pushPost, Post, defaultPost } from "@/posts/utils";
+import Pagination, { fetchPosts, pushPost, Post, defaultPost, fetchPostsNum, postsPerPage } from "@/posts/utils";
+import { useSearchParams } from "react-router-dom";
 
 export default function ActivitiesPage() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -14,12 +15,17 @@ export default function ActivitiesPage() {
   const [epost, setEpost] = useState<Post>(defaultPost("activity"));
   const [sending, setSending] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const [numPosts, setNumPosts] = useState(-1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentPage = Number(searchParams.get("page")) || 1;
   useEffect(() => {
-    fetchPosts(posts, setPosts, {
+    const limitation: Post =  {
       category: "activity",
       deleted: false,
       private: get_var("admin_mode") ? undefined : false
-    });
+    }
+    fetchPostsNum(setNumPosts, limitation);
+    fetchPosts(posts, setPosts, limitation, (currentPage - 1) * postsPerPage, postsPerPage);
   }, []);
   const pushPost_ = () => {
     if (sending) return;
@@ -103,6 +109,7 @@ export default function ActivitiesPage() {
               <MarkdownWithMath className="mt-1">{post.content}</MarkdownWithMath>
             </div>
           ))}
+          <Pagination numPosts={numPosts} searchParams={searchParams} setSearchParams={setSearchParams}  />
         </div>
       </div>
     </div>

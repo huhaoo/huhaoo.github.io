@@ -2,25 +2,30 @@ import { useEffect, useState } from "react";
 import Sidebar from "@/sidebar";
 import { formatTime, get_var, MarkdownWithMath } from "@/utils";
 
-import { buttonClass, fetchPost, fetchPosts, pushPost, type Post } from "@/posts/utils";
-import { useParams } from "react-router-dom";
+import Pagination, { buttonClass, fetchPost, fetchPosts, fetchPostsNum, postsPerPage, pushPost, type Post } from "@/posts/utils";
+import { useParams, useSearchParams } from "react-router-dom";
 import { EyeIcon, EyeSlashIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 
 export default function PostsPage() {
   const { postId } = useParams<{ postId?: string }>();
   const [posts, setPosts] = useState<Post[]>([]);
   const admin_mode = get_var("admin_mode") ?? false;
+  const [numPosts, setNumPosts] = useState(-1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentPage = Number(searchParams.get("page")) || 1;
   if (postId)
     useEffect(() => {
       fetchPost(Number(postId), (post) => setPosts([post]));
     }, []);
   else
     useEffect(() => {
-      fetchPosts(posts, setPosts, {
+      const limitation: Post = {
         category: "post",
         deleted: false,
         private: get_var("admin_mode") ? undefined : false
-      } as Post);
+      };
+      fetchPosts(posts, setPosts, limitation, (currentPage - 1) * postsPerPage, postsPerPage);
+      fetchPostsNum(setNumPosts, limitation);
     }, []);
 
   const max_preview_length = postId ? 0x7fffffff : 500;
@@ -73,6 +78,7 @@ export default function PostsPage() {
               }
             </div>
           ))}
+          <Pagination numPosts={numPosts} searchParams={searchParams} setSearchParams={setSearchParams}  />
         </div>
       </div>
     </div>
