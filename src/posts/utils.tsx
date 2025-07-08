@@ -17,6 +17,17 @@ export class Post {
   create_time?: string;
   update_time?: string;
 }
+export function defaultPost(category: string): Post {
+  return {
+    category,
+    priority: 0,
+    deleted: false,
+    private: false,
+    label: "",
+    title: "",
+    content: "",
+  } as Post;
+}
 
 export function fetchPosts(
   posts: Post[],
@@ -28,7 +39,7 @@ export function fetchPosts(
   // console.log(JSON.stringify(limitation));
   var head = `${API_URL}/posts/collect?`;
   for (const key in limitation) if (limitation[key as keyof Post] !== undefined)
-    head += `${key}=${encodeURIComponent(limitation[key as keyof Post] as string|number|boolean)}&`;
+    head += `${key}=${encodeURIComponent(limitation[key as keyof Post] as string | number | boolean)}&`;
   // console.log(head)
   if (offset !== undefined) head += `offset=${offset}&`;
   if (limit !== undefined) head += `limit=${limit}&`;
@@ -78,8 +89,9 @@ export function fetchPost(postId: number, setPost: (post: Post) => void) {
 }
 
 export function pushPost(body: Post, mode: "new" | "update",
-  onSuccess: (message: string) => void = () => setTimeout(() => { window.location.reload(); }, 1000))
-{
+  final: () => void = () => { },
+  onSuccess: (message: string) => void = () => setTimeout(() => { window.location.reload(); }, 1000),
+) {
   fetch(`${API_URL}/posts/${mode}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', },
@@ -90,8 +102,9 @@ export function pushPost(body: Post, mode: "new" | "update",
         toast.success(message.message);
         onSuccess(message.message);
       } else toast.error(message.message);
+      final();
     })
-    .catch((error) => { toast.error(error.message); });
+    .catch((error) => { toast.error(error.message); final(); });
 };
 
-export const buttonClass="fixed top-4 right-4 z-50 bg-white text-black border border-gray-300 rounded-full w-12 h-12 flex items-center justify-center shadow-md hover:bg-gray-100 transition-colors duration-200"
+export const buttonClass = "fixed top-4 right-4 z-50 bg-white text-black border border-gray-300 rounded-full w-12 h-12 flex items-center justify-center shadow-md hover:bg-gray-100 transition-colors duration-200"

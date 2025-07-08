@@ -157,13 +157,14 @@ export function Settings_text_box({ key_, type, data, className, edit, placehold
     )
 }
 
-export function Textarea({ text, setText, placeholder, rows, className, ref }: {
+export function Textarea({ text, setText, placeholder, rows, className, ref, onKeyDown }: {
   text: string,
   setText: (v: string) => void,
   placeholder?: string,
   rows?: number,
   className?: string,
-  ref?: React.Ref<HTMLTextAreaElement>
+  ref?: React.Ref<HTMLTextAreaElement>,
+  onKeyDown?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void
 }): JSX.Element {
   return (
     <textarea
@@ -176,6 +177,7 @@ export function Textarea({ text, setText, placeholder, rows, className, ref }: {
         e.target.style.height = "auto";
         e.target.style.height = `${e.target.scrollHeight}px`;
       }}
+      onKeyDown={onKeyDown}
       className={`w-full resize-none text-sm focus:outline-none overflow-hidden ${className}`}
     />
   )

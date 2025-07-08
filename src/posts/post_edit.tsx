@@ -1,25 +1,18 @@
 import { useEffect, useState } from "react";
 import { get_var, MarkdownWithMath, set_var } from "@/utils";
 
-import { fetchPost, pushPost, Post } from "@/posts/utils";
+import { fetchPost, pushPost, Post, defaultPost } from "@/posts/utils";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 
 export default function PostEditPage() {
-  const {postId} = useParams<{postId?: string}>();
-  const [post, setPost] = useState<Post>(Object.assign(new Post(), {
-    category: "post",
-    priority: 0,
-    deleted: false,
-    private: false,
-    label: "",
-    title: "",
-    content: "",
-  }));
+  const { postId } = useParams<{ postId?: string }>();
+  const [post, setPost] = useState<Post>(defaultPost("post"));
   if (postId)
     useEffect(() => {
-      fetchPost(Number(postId), (post)=>setPost(post));
+      fetchPost(Number(postId), (post) => setPost(post));
     }, []);
+  const [sending, setSending] = useState(false);
   return (
     <div className="w-screen h-screen flex flex-col overflow-hidden font-mono text-sm">
 
@@ -29,7 +22,7 @@ export default function PostEditPage() {
         </div>
 
         <div>
-          当前：{postId !== undefined ? <>编辑文章 #{postId}</> : <>新建文章</>}
+          当前：{postId != undefined ? <>编辑文章 #{postId}</> : <>新建文章</>}
         </div>
 
         <div className="ml-auto cursor-pointer" onClick={() => {
@@ -39,13 +32,24 @@ export default function PostEditPage() {
           更改token
         </div>
 
-        <div className="cursor-pointer" onClick={() => pushPost(post, postId ? "update" : "new", (message) => {
-          const match = message.toLowerCase().match(/(\d+)/);
-          const id = match ? match[1] : null;
-          // console.log(message, match, id)
-          if(!id){ toast.error("无法获取文章ID，请手动刷新页面"); setTimeout(() => history.back(), 1000); return; }
-          setTimeout(() => location.href = `/posts/${id}`, 1000);
-        })}>
+
+        <div className="cursor-pointer" onClick={() => { setPost({ ...post, private: !post.private }); }}>
+          {!post.private ? <>公开</> : <>私有</>}
+        </div>
+
+        <div className="cursor-pointer" onClick={() => {
+          if (sending) return;
+          if ((post.title ?? "") == "") { toast.error("标题不能为空"); return; }
+          if ((post.content ?? "") == "") { toast.error("内容不能为空"); return; }
+          setSending(true);
+          pushPost(post, postId ? "update" : "new", () => { setPost(defaultPost("post")); setSending(false); }, (message) => {
+            const match = message.toLowerCase().match(/(\d+)/);
+            const id = match ? match[1] : null;
+            // console.log(message, match, id)
+            if (!id) { toast.error("无法获取文章ID，请手动刷新页面"); setTimeout(() => history.back(), 1000); return; }
+            setTimeout(() => location.href = `/posts/${id}`, 1000);
+          })
+        }}>
           {postId ? "保存" : "发布"}
         </div>
       </div>

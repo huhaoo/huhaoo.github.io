@@ -4,6 +4,7 @@ import { formatTime, get_var, MarkdownWithMath } from "@/utils";
 
 import { buttonClass, fetchPost, fetchPosts, pushPost, type Post } from "@/posts/utils";
 import { useParams } from "react-router-dom";
+import { EyeIcon, EyeSlashIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 
 export default function PostsPage() {
   const { postId } = useParams<{ postId?: string }>();
@@ -49,17 +50,17 @@ export default function PostsPage() {
                 {get_var("admin_mode") &&
                   <div className="ml-auto flex flex-row space-x-2">
                     <a href={`/posts/edit/${post.id}`}>
-                      编辑
+                      <PencilIcon className="w-3 h-3" />
                     </a>
                     <div className="cursor-pointer" onClick={() => {
                       pushPost({ id: post.id, private: !post.private }, "update", () => setPosts(posts.map(p => p.id === post.id ? { ...p, private: !p.private } : p)));
                     }}>
-                      {!post.private && <>取消</>}公开
+                      {post.private ? <EyeSlashIcon className="w-3 h-3" /> : <EyeIcon className="w-3 h-3" />}
                     </div>
                     <div className="cursor-pointer" onClick={() => {
                       pushPost({ id: post.id, deleted: true }, "update", () => setPosts(posts.filter(p => p.id !== post.id)));
                     }}>
-                      删除
+                      <TrashIcon className="w-3 h-3" />
                     </div>
                   </div>
                 }
