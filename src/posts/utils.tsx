@@ -37,7 +37,7 @@ export function fetchPosts(
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      "token": get_var("token") || ""
+      "token": get_var("token") ?? ""
     }
   })
     .then((response) => response.json())
@@ -60,7 +60,7 @@ export function fetchPost(postId: number, setPost: (post: Post) => void) {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      "token": get_var("token") || ""
+      "token": get_var("token") ?? ""
     }
   })
     .then((response) => response.json())
@@ -78,12 +78,12 @@ export function fetchPost(postId: number, setPost: (post: Post) => void) {
 }
 
 export function pushPost(body: Post, mode: "new" | "update",
-  onSuccess: (message: string) => void = () => setTimeout(() => { window.location.reload(); }, 2000))
+  onSuccess: (message: string) => void = () => setTimeout(() => { window.location.reload(); }, 1000))
 {
   fetch(`${API_URL}/posts/${mode}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', },
-    body: JSON.stringify({ ...body, token: get_var("token") || "" }),
+    body: JSON.stringify({ ...body, token: get_var("token") ?? "" }),
   }).then((response) => response.json())
     .then((message) => {
       if (message.status === "success") {

@@ -22,7 +22,7 @@ export function Text_box_hl({ text, className }: {
 }): JSX.Element {
   return (
     <div className={hl_class}>
-      <div className={className || ""}>{text}</div>
+      <div className={className ?? ""}>{text}</div>
     </div>
   )
 }
@@ -99,7 +99,7 @@ export function Input_text_box({ value, setValue, onEnter, placeholder, classNam
         }
       }}
       placeholder={placeholder || "Text ..."}
-      className={`${hl_class} ${className || ""}`}
+      className={`${hl_class} ${className ?? ""}`}
     />
   )
 }
@@ -139,7 +139,7 @@ export function Settings_text_box({ key_, type, data, className, edit, placehold
           fetch(`${API_URL}/settings?key=` + key_, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({ key: key_, value: text, token: get_var("token") || "" })
+            body: JSON.stringify({ key: key_, value: text, token: get_var("token") ?? "" })
           })
             .then((response) => response.json())
             .then((data) => {

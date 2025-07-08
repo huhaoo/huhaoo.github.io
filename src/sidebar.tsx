@@ -5,8 +5,8 @@ import { get_var, set_var } from "./utils";
 
 const Sidebar = () => {
   const hr = <hr className="border-gray-200 my-2" />;
-  const edit = get_var("admin_mode") || false;
-  const [token, setToken] = useState(get_var("token") || "");
+  const edit = get_var("admin_mode") ?? false;
+  const [token, setToken] = useState(get_var("token") ?? "");
   const block_class = `
     block w-full 
     px-10 font-bold py-3 transition !text-black text-lg

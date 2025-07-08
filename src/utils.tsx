@@ -68,7 +68,7 @@ export function MarkdownWithMath({ children, className }: { children: ReactNode,
 	const [renderHtml, setRenderHtml] = useState<string>("")
 	useEffect(() => {
 		const fetchData = async () => {
-			const markdownHtml = await marked.parse(children?.toString() || "")
+			const markdownHtml = await marked.parse(children?.toString() ?? "")
 			const mathRendered = renderMath(markdownHtml)
 			const safeHtml = DOMPurify.sanitize(mathRendered)
 			setRenderHtml(safeHtml)

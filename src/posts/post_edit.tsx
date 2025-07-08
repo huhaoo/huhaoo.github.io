@@ -33,7 +33,7 @@ export default function PostEditPage() {
         </div>
 
         <div className="ml-auto cursor-pointer" onClick={() => {
-          const token = prompt("请输入新的token：", get_var("token") || "");
+          const token = prompt("请输入新的token：", get_var("token") ?? "");
           if (token) set_var("token", token);
         }}>
           更改token
@@ -43,8 +43,8 @@ export default function PostEditPage() {
           const match = message.toLowerCase().match(/(\d+)/);
           const id = match ? match[1] : null;
           // console.log(message, match, id)
-          if(!id){ toast.error("无法获取文章ID，请手动刷新页面"); setTimeout(() => history.back(), 2000); return; }
-          setTimeout(() => location.href = `/posts/${id}`, 2000);
+          if(!id){ toast.error("无法获取文章ID，请手动刷新页面"); setTimeout(() => history.back(), 1000); return; }
+          setTimeout(() => location.href = `/posts/${id}`, 1000);
         })}>
           {postId ? "保存" : "发布"}
         </div>

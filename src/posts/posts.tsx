@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 export default function PostsPage() {
   const { postId } = useParams<{ postId?: string }>();
   const [posts, setPosts] = useState<Post[]>([]);
-  const admin_mode = get_var("admin_mode") || false;
+  const admin_mode = get_var("admin_mode") ?? false;
   if (postId)
     useEffect(() => {
       fetchPost(Number(postId), (post) => setPosts([post]));
@@ -17,9 +17,7 @@ export default function PostsPage() {
     useEffect(() => {
       fetchPosts(posts, setPosts, {
         category: "post",
-        // category: "activity",
         deleted: false,
-        // deleted: true,
         private: get_var("admin_mode") ? undefined : false
       } as Post);
     }, []);

@@ -11,7 +11,7 @@ export default function ActivitiesPage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [mode, setMode] = useState<"new"|"update">("new");
   const [id, setId] = useState<number|undefined>(undefined);
-  const admin_mode = get_var("admin_mode") || false;
+  const admin_mode = get_var("admin_mode") ?? false;
   const [text,setText]= useState<string>("");
   const [title,setTitle]= useState<string>("");
   const textareaRef = useRef<HTMLTextAreaElement>(null)
