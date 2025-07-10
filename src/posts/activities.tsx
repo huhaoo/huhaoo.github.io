@@ -2,11 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import Sidebar from "@/sidebar";
 import { EyeIcon, EyeSlashIcon, PaperAirplaneIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Textarea } from "@/components/ui/textbox";
-import { formatTime, get_var, MarkdownWithMath } from "@/utils";
+import { formatTime, get_var } from "@/utils";
 import toast from "react-hot-toast";
 
-import Pagination, { fetchPosts, pushPost, Post, defaultPost, fetchPostsNum, postsPerPage } from "@/posts/utils";
+import { fetchPosts, pushPost, Post, defaultPost, fetchPostsNum } from "@/posts/utils";
 import { useSearchParams } from "react-router-dom";
+import { defaultPostsPerPage, Pagination } from "@/components/pagination";
+import { MarkdownWithMath } from "@/components/markdown";
 
 export default function ActivitiesPage() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -25,7 +27,7 @@ export default function ActivitiesPage() {
       private: get_var("admin_mode") ? undefined : false
     }
     fetchPostsNum(setNumPosts, limitation);
-    fetchPosts(posts, setPosts, limitation, (currentPage - 1) * postsPerPage, postsPerPage);
+    fetchPosts(posts, setPosts, limitation, (currentPage - 1) * defaultPostsPerPage, defaultPostsPerPage);
   }, []);
   const pushPost_ = () => {
     if (sending) return;

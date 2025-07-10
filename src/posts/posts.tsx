@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import Sidebar from "@/sidebar";
-import { formatTime, get_var, MarkdownWithMath } from "@/utils";
+import { formatTime, get_var } from "@/utils";
 
-import Pagination, { buttonClass, fetchPost, fetchPosts, fetchPostsNum, postsPerPage, pushPost, type Post } from "@/posts/utils";
+import { buttonClass, fetchPost, fetchPosts, fetchPostsNum, pushPost, type Post } from "@/posts/utils";
 import { useParams, useSearchParams } from "react-router-dom";
 import { EyeIcon, EyeSlashIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { defaultPostsPerPage, Pagination } from "@/components/pagination";
+import { MarkdownWithMath } from "@/components/markdown";
 
 export default function PostsPage() {
   const { postId } = useParams<{ postId?: string }>();
@@ -24,7 +26,7 @@ export default function PostsPage() {
         deleted: false,
         private: get_var("admin_mode") ? undefined : false
       };
-      fetchPosts(posts, setPosts, limitation, (currentPage - 1) * postsPerPage, postsPerPage);
+      fetchPosts(posts, setPosts, limitation, (currentPage - 1) * defaultPostsPerPage, defaultPostsPerPage);
       fetchPostsNum(setNumPosts, limitation);
     }, []);
 
