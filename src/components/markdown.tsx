@@ -1,10 +1,10 @@
 
-import { useContext, useEffect, useState, type ReactNode } from "react"
-import { marked } from "marked"
-import katex from "katex"
-import DOMPurify from "dompurify"
-import "katex/dist/katex.min.css"
 import { GlobalContext } from "@/global_context"
+import DOMPurify from "dompurify"
+import katex from "katex"
+import "katex/dist/katex.min.css"
+import { marked } from "marked"
+import { useContext, useEffect, useState, type ReactNode } from "react"
 
 function renderMath(content: string, macros: string): string {
 	console.log("Global Context:", macros)
@@ -53,7 +53,7 @@ export function MarkdownWithMath({ children, className }: { children: ReactNode,
 
 	return (
 		<div
-			className={`prose max-w-none ${className}`}
+			className={`prose max-w-none leading-relaxed ${className}`}
 			dangerouslySetInnerHTML={{ __html: renderHtml }}
 		/>
 	)
