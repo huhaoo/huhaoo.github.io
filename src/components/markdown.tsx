@@ -39,11 +39,11 @@ export function MarkdownWithMath({ children, className }: { children: ReactNode,
 	useEffect(() => {
 		marked.setOptions({
 			gfm: true,
-			breaks: true,
+			// breaks: true,
 		})
 		const fetchData = async () => {
 			const markdownHtml = await marked.parse(children?.toString() ?? "")
-			console.log("Markdown HTML:", markdownHtml)
+			// console.log("Markdown HTML:", markdownHtml)
 			const mathRendered = renderMath(markdownHtml, macros)
 			const safeHtml = DOMPurify.sanitize(mathRendered)
 			setRenderHtml(safeHtml)
@@ -53,7 +53,7 @@ export function MarkdownWithMath({ children, className }: { children: ReactNode,
 
 	return (
 		<div
-			className={`prose max-w-none leading-relaxed ${className}`}
+			className={`prose max-w-none ${className}`}
 			dangerouslySetInnerHTML={{ __html: renderHtml }}
 		/>
 	)

@@ -5,7 +5,6 @@ import { EyeIcon, EyeSlashIcon, PaperAirplaneIcon, PencilIcon, TrashIcon } from 
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
-import { MarkdownWithMath } from "@/components/markdown";
 import { defaultPostsPerPage, Pagination } from "@/components/pagination";
 import { defaultPost, fetchPosts, fetchPostsNum, Post, pushPost } from "@/posts/utils";
 import { useSearchParams } from "react-router-dom";
@@ -83,9 +82,10 @@ export default function ActivitiesPage() {
                 {get_var("admin_mode") &&
                   <div className="ml-auto flex flex-row space-x-2">
                     <div className="cursor-pointer" onClick={() => {
+                      console.log(post.content)
                       if (mode == "update" && epost.id == post.id) {
                         setMode("new");
-                        setEpost({ content: "", title: "" } as Post);
+                        setEpost(defaultPost("activity"));
                       } else {
                         setMode("update");
                         setEpost(post);
@@ -107,8 +107,8 @@ export default function ActivitiesPage() {
                   </div>
                 }
               </div>
-              {post.title && post.title != "" && <MarkdownWithMath className="text-xl font-semibold underline">{post.title}</MarkdownWithMath>}
-              <MarkdownWithMath className="mt-1">{post.content}</MarkdownWithMath>
+              {post.title && post.title != "" && <div className="text-xl font-semibold underline">{post.title}</div>}
+              <div className="mt-1 whitespace-pre-line break-words">{post.content}</div>
             </div>
           ))}
           <Pagination numPosts={numPosts} searchParams={searchParams} setSearchParams={setSearchParams}  />

@@ -24,6 +24,12 @@
   color: #535bf2;
 } */
 
+.br-space br::after {
+  content: '';
+  display: block;
+  height: 0.5em;
+}
+
 body {
   margin: 0;
   display: flex;
