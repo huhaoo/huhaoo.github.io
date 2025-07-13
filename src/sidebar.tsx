@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Input_text_box, Settings_text_box, Text_box_hl_clickable } from "./components/ui/textbox";
 import ToggleSwitch from "./components/ui/switch";
+import { Input_text_box, Settings_text_box, Text_box_hl_clickable } from "./components/ui/textbox";
 import { get_var, set_var } from "./utils";
 
 const Sidebar = () => {

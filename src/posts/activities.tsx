@@ -1,14 +1,14 @@
-import { useEffect, useRef, useState } from "react";
-import Sidebar from "@/sidebar";
-import { EyeIcon, EyeSlashIcon, PaperAirplaneIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Textarea } from "@/components/ui/textbox";
+import Sidebar from "@/sidebar";
 import { formatTime, get_var } from "@/utils";
+import { EyeIcon, EyeSlashIcon, PaperAirplaneIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
-import { fetchPosts, pushPost, Post, defaultPost, fetchPostsNum } from "@/posts/utils";
-import { useSearchParams } from "react-router-dom";
-import { defaultPostsPerPage, Pagination } from "@/components/pagination";
 import { MarkdownWithMath } from "@/components/markdown";
+import { defaultPostsPerPage, Pagination } from "@/components/pagination";
+import { defaultPost, fetchPosts, fetchPostsNum, Post, pushPost } from "@/posts/utils";
+import { useSearchParams } from "react-router-dom";
 
 export default function ActivitiesPage() {
   const [posts, setPosts] = useState<Post[]>([]);

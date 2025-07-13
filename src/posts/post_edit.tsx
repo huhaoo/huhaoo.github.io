@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
 import { get_var, set_var } from "@/utils";
+import { useEffect, useState } from "react";
 
-import { fetchPost, pushPost, Post, defaultPost } from "@/posts/utils";
-import { useParams } from "react-router-dom";
-import toast from "react-hot-toast";
 import { MarkdownWithMath } from "@/components/markdown";
+import { Post, defaultPost, fetchPost, pushPost } from "@/posts/utils";
+import toast from "react-hot-toast";
+import { useParams } from "react-router-dom";
 
 export default function PostEditPage() {
   const { postId } = useParams<{ postId?: string }>();

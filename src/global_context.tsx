@@ -1,6 +1,6 @@
-import React, { createContext, useState, useEffect } from 'react';
-import { api_url } from './utils';
+import React, { createContext, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { api_url } from './utils';
 
 export interface GlobalContextType {
 	md_macros?: string;

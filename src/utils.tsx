@@ -15,11 +15,11 @@ export function get_var(key: string): any {
 	}
 }
 
-import dayjs from "dayjs"
-import relativeTime from "dayjs/plugin/relativeTime"
-import utc from "dayjs/plugin/utc"
-import timezone from "dayjs/plugin/timezone"
-import "dayjs/locale/zh-cn"
+import dayjs from "dayjs";
+import "dayjs/locale/zh-cn";
+import relativeTime from "dayjs/plugin/relativeTime";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 dayjs.extend(relativeTime)
 dayjs.extend(utc)
 dayjs.extend(timezone)
