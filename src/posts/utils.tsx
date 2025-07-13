@@ -114,7 +114,7 @@ export function fetchPostsNum(setNumPosts: (num: number) => void, limitation: Po
 }
 
 export function pushPost(body: Post, mode: "new" | "update",
-  final: () => void = () => { },
+  final: (success: boolean) => void = () => { },
   onSuccess: (message: string) => void = () => setTimeout(() => { window.location.reload(); }, 1000),
 ) {
   fetch(`${API_URL}/posts/${mode}`, {
@@ -127,9 +127,9 @@ export function pushPost(body: Post, mode: "new" | "update",
         toast.success(message.message);
         onSuccess(message.message);
       } else toast.error(message.message);
-      final();
+      final(message.status === "success");
     })
-    .catch((error) => { toast.error(error.message); final(); });
+    .catch((error) => { toast.error(error.message); final(false); });
 };
 
 export const buttonClass = "fixed top-4 right-4 z-50 bg-white text-black border border-gray-300 rounded-full w-12 h-12 flex items-center justify-center shadow-md hover:bg-gray-200 transition-colors duration-200"

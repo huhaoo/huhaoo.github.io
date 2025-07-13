@@ -34,7 +34,7 @@ export default function ActivitiesPage() {
     console.log("Pushing post", JSON.stringify(epost));
     if ((epost.content ?? "") == "") { toast.error("内容不能为空"); return; }
     setSending(true);
-    pushPost(epost, mode, () => { setEpost(defaultPost("activity")); setSending(false); });
+    pushPost(epost, mode, (success) => { if(success) setEpost(defaultPost("activity")); setSending(false); });
   }
   return (
     <div className="flex w-screen">

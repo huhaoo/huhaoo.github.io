@@ -43,7 +43,7 @@ export default function PostEditPage() {
           if ((post.title ?? "") == "") { toast.error("标题不能为空"); return; }
           if ((post.content ?? "") == "") { toast.error("内容不能为空"); return; }
           setSending(true);
-          pushPost(post, postId ? "update" : "new", () => { setPost(defaultPost("post")); setSending(false); }, (message) => {
+          pushPost(post, postId ? "update" : "new", (success) => { if(success) setPost(defaultPost("post")); setSending(false); }, (message) => {
             const match = message.toLowerCase().match(/(\d+)/);
             const id = match ? match[1] : null;
             // console.log(message, match, id)

@@ -114,7 +114,7 @@ export function Settings_text_box({ key_, type, data, className, edit, placehold
 }): JSX.Element {
   const [text, setText] = useState<string>("");
   const API_URL = api_url();
-  console.log(`${API_URL}/api/settings?key=` + key_)
+  // console.log(`${API_URL}/api/settings?key=` + key_)
   useEffect(() => {
     fetch(`${API_URL}/settings?key=` + key_)
       .then((response) => response.json())
