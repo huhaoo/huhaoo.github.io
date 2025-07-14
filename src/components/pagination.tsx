@@ -27,9 +27,12 @@ export function Pagination({ numPosts, searchParams, setSearchParams, postsPerPa
 	const renderPages = () => {
 		const pages = [];
 		const visiblePages = new Set<number>();
-		visiblePages.add(1);
-		visiblePages.add(totalPages);
-		for (let i = currentPage - preSufPageNum; i <= currentPage + preSufPageNum; i++) if (i > 1 && i < totalPages) visiblePages.add(i);
+		if(totalPages)
+		{
+			visiblePages.add(1);
+			visiblePages.add(totalPages);
+			for (let i = currentPage - preSufPageNum; i <= currentPage + preSufPageNum; i++) if (i > 1 && i < totalPages) visiblePages.add(i);
+		}
 		const sortedPages = Array.from(visiblePages).sort((a, b) => a - b);
 		let lastPage = 0;
 		for (const page of sortedPages) {
