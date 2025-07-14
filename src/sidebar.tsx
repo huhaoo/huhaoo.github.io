@@ -3,7 +3,7 @@ import ToggleSwitch from "./components/ui/switch";
 import { Input_text_box, Settings_text_box, Text_box_hl_clickable } from "./components/ui/textbox";
 import { get_var, set_var } from "./utils";
 
-const Sidebar = () => {
+export function Sidebar() {
   const hr = <hr className="border-gray-200 my-2" />;
   const edit = get_var("admin_mode") ?? false;
   const [token, setToken] = useState(get_var("token") ?? "");
@@ -94,4 +94,11 @@ const Sidebar = () => {
   )
 };
 
-export default Sidebar;
+export function DefaultPage({children}: {children: React.ReactNode}) {
+  return (
+    <div className="flex w-screen">
+      <Sidebar />
+      {children}
+    </div>
+  )
+}

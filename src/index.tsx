@@ -1,7 +1,7 @@
 // import { Disclosure } from '@headlessui/react'
 // import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
-import Sidebar from "./sidebar";
+import { Sidebar } from "./sidebar";
 
 export default function IndexPage() {
   return (
